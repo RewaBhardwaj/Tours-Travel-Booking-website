@@ -5,5 +5,3 @@
 - Node JS
 - Express jS
 - MongoDB
-
-using blablabla
