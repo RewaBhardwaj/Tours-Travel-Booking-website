@@ -3,5 +3,5 @@
 ## Technologies Used:
 - React JS
 - Node JS
-- Express jS
+- Express JS
 - MongoDB
