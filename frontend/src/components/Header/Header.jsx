@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useRef, useEffect} from "react";
 import { Container, Row, Button} from "reactstrap";
 //ReactStrap is a library of react that provides bootstrap functionality.
 import { NavLink, Link } from "react-router-dom";
@@ -25,8 +25,26 @@ const nav__links = [
 
 
 const Header = () => {
+
+const headerRef = useRef(null)
+const stickyHeaderFunc = ()=>{
+  window.addEventListener('scroll', ()=>{
+    if(document.body.scrollTop >80 || document.documentElement.scrollTop >80){
+      headerRef.current.classList.add('sticky__header')
+    }else{
+      headerRef.current.classList.remove('sticky__header')
+    }
+  })
+}
+//An arrow function is a compact alternative to a traditional function expression.
+
+useEffect(()=>{  //useEffect is a type of react hook used to convert a stateless component into stateful component.
+  stickyHeaderFunc()
+
+  return window.removeEventListener('scroll', stickyHeaderFunc)
+})
   return (
-  <header className="header">
+  <header className="header" ref={headerRef}>
       <Container>
         <Row>
           <div className="nav__wrapper d-flex align-items-center
@@ -74,5 +92,4 @@ const Header = () => {
 };
 
 export default Header;
-
-{/* d flex is used to control the layout , align items and manage spaces bw items. */}
+// d flex is used to control the layout, align items and manage spaces bw items.
