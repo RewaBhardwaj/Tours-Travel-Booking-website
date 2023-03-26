@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const authRoute = require('./routes/auth');
 const tourRoute = require('./routes/tours');
 const userRoute = require('./routes/users');
+const reviewRoute = require('./routes/reviews')
+const bookingRoute = require('./routes/bookings');
 
 dotenv.config();
 const app = express();
@@ -30,9 +32,13 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
+
+// routes
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/users', userRoute);
+app.use('/api/v1/review', reviewRoute);
+app.use('/api/v1/booking', bookingRoute);
 
 // listening at PORT : 5000
 app.listen(PORT, () => {
