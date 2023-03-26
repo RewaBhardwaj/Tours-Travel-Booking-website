@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const verifyToken = (req, res, next) => {
-    const token = req.cookie.accessToken;
+    const token = req.cookies.accessToken;
 
     // token expired 
     if(!token) {
