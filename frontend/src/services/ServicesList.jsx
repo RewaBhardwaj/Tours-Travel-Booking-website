@@ -9,18 +9,18 @@ const serviceData = [
   {
     imgUrl: weatherImg,
     title: "Calculate Weather",
-    desc: "Lorem ipsum dolor sit amet , consectetur adipisicing elit",
+    desc: "Before travelling , know the weather of your desitnation.",
   },
 
   {
     imgUrl: guideImg,
     title: "Best Tour Guide",
-    desc: "Lorem ipsum dolor sit amet , consectetur adipisicing elit",
+    desc: "Get the best tour guides , offers from our website!",
   },
   {
     imgUrl: customizationImg,
     title: "Customization",
-    desc: "Lorem ipsum dolor sit amet , consectetur adipisicing elit",
+    desc: "You will get a chance to customize the hotel rooms.",
   },
 ];
 
