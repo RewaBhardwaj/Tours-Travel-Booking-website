@@ -9,7 +9,7 @@ const SearchBar = () => {
   const maxGroupSizeRef = useRef(0);
 
   const searchHandler = () => {
-    const location = locationRef.current.value;
+    const location = locationRef.current.value; 
     const distance = distanceRef.current.value;
     const maxGroupSize = maxGroupSizeRef.current.value;
 
