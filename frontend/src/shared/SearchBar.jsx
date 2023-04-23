@@ -1,22 +1,34 @@
 import React, { useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./search-bar.css";
-
 import { Col, Form, FormGroup } from "reactstrap";
+import { BASE_URL } from "../utils/config";
 
 const SearchBar = () => {
   const locationRef = useRef("");
   const distanceRef = useRef(0);
   const maxGroupSizeRef = useRef(0);
+  const navigate = useNavigate();
 
-  const searchHandler = () => {
-    const location = locationRef.current.value; 
+  const searchHandler = async () => {
+    const location = locationRef.current.value;
     const distance = distanceRef.current.value;
     const maxGroupSize = maxGroupSizeRef.current.value;
 
-    if(location==='' || distance==='' || maxGroupSizeRef===''){
-      return alert('All fields are required!');
+    if (location === '' && distance === '' && maxGroupSize === '') {
+      return alert('At least one field is required!');
     }
-  }
+
+    const res = await fetch(`${BASE_URL}/tours/search/getToursBySearch?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`);
+
+    if (!res.ok) {
+      alert('something went wrong');
+    }
+
+    const result = await res.json();
+
+    navigate(`/tours/search/getToursBySearch?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`, { state: result.data });
+  };
 
   return (
     <Col ig="12">
@@ -30,8 +42,8 @@ const SearchBar = () => {
             <div>
               <h6>Location</h6>
               <input type="text" placeholder="Where are you going?"
-              ref = {locationRef}
-               />
+                ref={locationRef}
+              />
             </div>
           </FormGroup>
           <FormGroup className="d-flex gap-3 form__group form__group-fast">
@@ -51,7 +63,7 @@ const SearchBar = () => {
 
             <div>
               <h6>Max People</h6>
-              <input type="number" placeholder="0" ref={maxGroupSizeRef}/>
+              <input type="number" placeholder="0" ref={maxGroupSizeRef} />
             </div>
           </FormGroup>
 

@@ -1,6 +1,7 @@
 const Review = require('../models/Review');
 const Tour = require('../models/Tour');
 
+// create review
 const createReview = async (req, res) => {
     const tourId = req.params.tourId;
     const newReview = new Review({ ...req.body });

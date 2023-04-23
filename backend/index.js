@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const cors = require('cors')
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+
+// fetching routes
 const authRoute = require('./routes/auth');
 const tourRoute = require('./routes/tours');
 const userRoute = require('./routes/users');
@@ -33,7 +35,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
 
-// routes
+// routes path and redirecting...
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/users', userRoute);
