@@ -11,7 +11,7 @@ const createTour = async (req, res) => {
     }
 }
 
-// update tour
+// update tour function
 const updateTour = async (req, res) => {
     const _id = req.params.id;
     try {
@@ -24,7 +24,7 @@ const updateTour = async (req, res) => {
     }
 }
 
-// delete tour
+// delete tour function
 const deleteTour = async (req, res) => {
     const _id = req.params.id;
     try {
@@ -35,7 +35,7 @@ const deleteTour = async (req, res) => {
     }
 }
 
-// get single tour
+// single tour function
 const getSingleTour = async (req, res) => {
     const _id = req.params.id;
 
@@ -47,35 +47,37 @@ const getSingleTour = async (req, res) => {
     }
 }
 
-// get all tours
+// get all tours function
 const getAllTours = async (req, res) => {
 
     // for pagination
     const page = parseInt(req.query.page);
 
     try {
-        const tours = await Tour.find({}).populate('reviews').skip((page - 1) * 8).limit(8);
+        const tours = await Tour.find({}).populate('reviews').skip((page) * 8).limit(8);
         res.status(200).send({ success: true, count: tours.length, data: tours });
     } catch (err) {
         res.status(404).send({ success: false, message: 'Failed to get tours', err });
     }
 }
 
-// get tour by Search
+// get tour by Search function
 const getTourBySearch = async (req, res) => {
     const city = new RegExp(req.query.city, 'i');
     const distance = parseInt(req.query.distance);
     const maxGroupSize = parseInt(req.query.maxGroupSize);
 
     try {
-        const tours = await Tour.find({ city, distance: { $gte: distance }, maxGroupSize: { $gte: maxGroupSize } }).populate('reviews');
+        const tours = await Tour
+            .find({ city })
+            .populate('reviews');
         res.status(200).send({ success: true, count: tours.length, data: tours });
     } catch (err) {
         res.status(404).send({ success: false, message: 'Failed to get tours', err });
     }
 }
 
-// get featured tours
+// get featured tours function
 const getFeaturedTours = async (req, res) => {
     try {
         const tours = await Tour.find({ featured: true }).populate('reviews');
@@ -85,10 +87,11 @@ const getFeaturedTours = async (req, res) => {
     }
 }
 
+// get tours count
 const getToursCount = async (req, res) => {
     try {
         const toursCount = await Tour.estimatedDocumentCount();
-        res.status(200).send({ success: true, toursCount});
+        res.status(200).send({ success: true, data: toursCount });
     } catch (err) {
         res.status(404).send({ success: false, message: 'Failed to get tours count', err });
     }

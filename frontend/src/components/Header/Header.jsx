@@ -79,7 +79,7 @@ useEffect(()=>{  //useEffect is a type of react hook used to convert a stateless
               Register</Link></Button>
             </div>
             <span className="mobile__menu">
-            <i class="ri-menu-line"></i>
+            <i className="ri-menu-line"></i>
 
             </span>
 

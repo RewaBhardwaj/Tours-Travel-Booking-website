@@ -13,7 +13,7 @@ router.get('/:id', getSingleTour);
 // get all tours
 router.get('/', getAllTours);
 // get tours by search
-router.get('/search/getTours', getTourBySearch);
+router.get('/search/getToursBySearch', getTourBySearch);
 // get featured tours
 router.get('/search/getFeaturedTours', getFeaturedTours);
 // get tours count
