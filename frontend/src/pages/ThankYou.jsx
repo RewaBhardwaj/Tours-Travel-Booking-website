@@ -1,8 +1,6 @@
 import React from 'react'
 import { Container , Row , Col , Button } from 'reactstrap'
-
 import {Link} from "react-router-dom" ;
-
 import '../styles/thank-you.css'
 
 const ThankYou = () => {
@@ -16,12 +14,10 @@ const ThankYou = () => {
 
                 <h3 className="mb-4">Your Tour is Booked.</h3>
 
-
                 <Button className="btn primary__btn w-25">
                 <Link to='/home'>Back to Home</Link>
                 </Button>
 
-                
             </div>
 
             </Col>
@@ -31,3 +27,6 @@ const ThankYou = () => {
 }
 
 export default ThankYou
+
+
+
