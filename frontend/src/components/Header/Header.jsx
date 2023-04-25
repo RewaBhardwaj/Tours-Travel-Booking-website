@@ -22,13 +22,9 @@ const nav__links = [
   }
 ]
 
-
-
-
 const Header = () => {
-
   const headerRef = useRef(null);
-  const menuRef = user(null);
+  const menuRef = useRef(null);
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
 
