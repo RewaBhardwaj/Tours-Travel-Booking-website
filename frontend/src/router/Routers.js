@@ -7,18 +7,20 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import SearchResultList from "../pages/SearchResultList";
 import ThankYou from "../pages/ThankYou";
+import Admin from "../pages/Admin";
 
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/home" />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/tours" element={<Tours />} />
-      <Route path="/tours/:id" element={<TourDetails />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/thank-you" element={<ThankYou />} />
-      <Route path="/tours/search/getToursBySearch" element={<SearchResultList />} />
+      <Route exact path="/" element={<Navigate to="/home" />} />
+      <Route exact path="/home" element={<Home />} />
+      <Route exact path="/tours" element={<Tours />} />
+      <Route exact path="/tours/:id" element={<TourDetails />} />
+      <Route exact path="/login" element={<Login />} />
+      <Route exact path="/register" element={<Register />} />
+      <Route exact path="/thank-you" element={<ThankYou />} />
+      <Route exact path="/tours/search/getToursBySearch" element={<SearchResultList />} />
+      <Route exact path="/admin" element={<Admin />} />
     </Routes>
   );
 };

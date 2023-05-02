@@ -6,10 +6,13 @@ import Routers from '../../router/Routers';
 const Layout = () => {
     return <>
         <Header />
-        <Routers/>
-        <Footer/>
+        <Routers />
+        {
+            window.location.pathname !== '/admin'
+            &&
+            <Footer />
+        }
     </>
-  
 }
 
 export default Layout
