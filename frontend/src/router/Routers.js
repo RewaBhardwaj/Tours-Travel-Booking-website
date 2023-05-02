@@ -7,7 +7,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import SearchResultList from "../pages/SearchResultList";
 import ThankYou from "../pages/ThankYou";
-import Admin from "../pages/Admin";
+import AllBookings from "../components/All-Bookings/AllBookings";
+import ManageTours from "../components/Manage-Tours/ManageTours";
 
 const Router = () => {
   return (
@@ -20,7 +21,8 @@ const Router = () => {
       <Route exact path="/register" element={<Register />} />
       <Route exact path="/thank-you" element={<ThankYou />} />
       <Route exact path="/tours/search/getToursBySearch" element={<SearchResultList />} />
-      <Route exact path="/admin" element={<Admin />} />
+      <Route exact path="/allBookings" element={<AllBookings />} />
+      <Route exact path="/manageTours" element={<ManageTours />} />
     </Routes>
   );
 };

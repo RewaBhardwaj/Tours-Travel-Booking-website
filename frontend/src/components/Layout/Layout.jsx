@@ -4,11 +4,14 @@ import Footer from './../Footer/Footer';
 import Routers from '../../router/Routers';
 
 const Layout = () => {
+    
+    const pathName = window.location.pathname.split('/')[1];
+
     return <>
         <Header />
         <Routers />
         {
-            window.location.pathname !== '/admin'
+            pathName !== 'admin'
             &&
             <Footer />
         }

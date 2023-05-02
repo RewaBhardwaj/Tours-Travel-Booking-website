@@ -10,7 +10,7 @@ const nav__links = [
   {
     path: "/home",
     display: "Home",
-    for: "both"
+    for: "user"
   },
   {
     path: "/about",
@@ -28,12 +28,12 @@ const nav__links = [
     for: "user"
   },
   {
-    path: '/allBookings',
+    path: 'allBookings',
     display: 'All Bookings',
     for: "admin"
   },
   {
-    path: '/manageTours',
+    path: 'manageTours',
     display: 'Manage Tours',
     for: "admin"
   }
@@ -44,7 +44,7 @@ const Header = () => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);
-  const pathName = window.location.pathname;
+
 
   const logout = () => {
     dispatch({ type: 'LOGOUT' });
@@ -87,8 +87,7 @@ const Header = () => {
                 {
                   nav__links.filter(item => {
                     return (
-                      item.for === 'both' || 
-                      (pathName === '/admin' ? item.for === 'admin' : item.for === 'user')
+                      (user ? user.role === 'user' ? item.for === 'user' : item : item.for === 'user')
                     );
                   }).map((item, index) => {
                     return (
