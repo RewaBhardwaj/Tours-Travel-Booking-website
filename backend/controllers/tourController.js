@@ -52,6 +52,7 @@ const getAllTours = async (req, res) => {
 
     // for pagination
     const page = parseInt(req.query.page);
+    console.log(req.cookies);
 
     try {
         const tours = await Tour.find({}).populate('reviews').skip((page) * 8).limit(8);
