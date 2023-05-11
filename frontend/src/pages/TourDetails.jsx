@@ -9,6 +9,10 @@ import Newsletter from "../shared/Newsletter";
 import useFetch from "../hooks/useFetch";
 import { BASE_URL } from "../utils/config";
 import { AuthContext } from "../Context/AuthContext";
+import "../styles/ImageSlider.css";
+
+
+
 
 const TourDetails = () => {
   const { id } = useParams();
@@ -21,7 +25,7 @@ const TourDetails = () => {
 
   // destructure properties from tour object
   const {
-    photo,
+   // photo, 
     title,
     desc,
     price,
@@ -34,18 +38,18 @@ const TourDetails = () => {
 
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
-  //format date
+  // format date
 
-  const options = { day: "numeric", month: "long", year: "numeric" }
+  const options = { day: "numeric", month: "long", year: "numeric" };
 
-  //submit request to the server
+  // submit request to the server
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const reviewText = reviewMsgRef.current.value;
-    
+
     try {
-      if(!user || user === undefined || user === null) {
+      if (!user || user === undefined || user === null) {
         return alert('Please sign in');
       }
 
@@ -53,7 +57,7 @@ const TourDetails = () => {
         username: user?.username,
         reviewText,
         rating: tourRating
-      }
+      };
 
       const res = await fetch(`${BASE_URL}/review/${id}`, {
         method: 'post',
@@ -64,53 +68,63 @@ const TourDetails = () => {
         body: JSON.stringify(reviewObj)
       });
 
+
       const result = await res.json();
-      if(!res.ok) {
+      if (!res.ok) {
         return alert(result.message);
       }
       alert('Review Submitted');
     } catch (err) {
       alert(err.message);
     }
-  }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [tour])
-  
+  }, [tour]);
+
+
+  const imgs=[
+    {id:0,value:"https://wallpaperaccess.com/full/2637581.jpg"},
+    {id:1,value:"https://wallpaperaccess.com/full/2637581.jpg"},
+    {id:2,value:"https://wallpaperaccess.com/full/2637581.jpg"},
+    {id:3,value:"https://wallpaperaccess.com/full/2637581.jpg"},
+  ]
+  const [wordData,setWordData]=useState(imgs[0])
+  const handleClick=(index)=>{
+    console.log(index)
+    const wordSlider=imgs[index];
+    setWordData(wordSlider)
+  }
 
   return (
     <>
       <section>
         <Container>
-          {
-            loading && <h4 className="text-center pt-5">Loading...</h4>
-          }
+          {loading && <h4 className="text-center pt-5">Loading...</h4>}
 
-          {
-            error && <h4 className="text-center pt-5">{error}</h4>
-          }
+          {error && <h4 className="text-center pt-5">{error}</h4>}
 
-          {
-            !loading && !error &&
+          {!loading && !error && (
             <Row>
               <Col lg="8">
                 <div className="tour__content">
-                  <img src={photo} alt="" />
+                <img src={wordData.value} height="300" width="500" /> 
+
+               <div className='flex_row'>
+                {imgs.map((data,i)=>
+                 <div className="thumbnail" key={i} >
+                 <img className={wordData.id==i?"clicked":""} 
+                  src={data.value} onClick={()=>handleClick(i)} height="70" width="100" />
+                   </div>
+                    )}
+                    </div>
+
                   <div className="tour__info">
                     <h2>{title}</h2>
-
-                    <div
-                      className="d-flex 
-               align-items-center gap-5"
-                    >
-                      <span
-                        className="tour__rating d-flex 
-             align-items-center gap-1"
-                      >
-                        <i
-                          className="ri-star-fill"
-                          style={{ color: "var(--secondary-color" }}
+                    <div className="d-flex align-items-center gap-5">
+                      <span className="tour__rating d-flex align-items-center gap-1">
+                        <i className="ri-star-fill" style= {{ color: "var(--secondary-color)"}}
                         ></i>
                         {avgRating === 0 ? null : avgRating}
                         {totalRating === 0 ? (
@@ -205,7 +219,7 @@ const TourDetails = () => {
               </Col>
               {/* Booking Section start here */}
             </Row>
-          }
+         ) }
         </Container>
       </section>
       <Newsletter />
