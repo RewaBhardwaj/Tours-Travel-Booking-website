@@ -9,6 +9,10 @@ import SearchResultList from "../pages/SearchResultList";
 import ThankYou from "../pages/ThankYou";
 import AllBookings from "../components/All-Bookings/AllBookings";
 import ManageTours from "../components/Manage-Tours/ManageTours";
+import AddTour from "../components/Add-Tours/AddTour";
+import UpdateTours from "../components/Update-Tours/UpdateTours";
+import DeleteTours from "../components/Delete-Tours/DeleteTours";
+import EditTour from "../components/EditTour/EditTour";
 
 const Router = () => {
   return (
@@ -23,6 +27,11 @@ const Router = () => {
       <Route exact path="/tours/search/getToursBySearch" element={<SearchResultList />} />
       <Route exact path="/allBookings" element={<AllBookings />} />
       <Route exact path="/manageTours" element={<ManageTours />} />
+      <Route exact path="/addTour" element={<AddTour />} />
+      <Route exact path="/updateTours" element={<UpdateTours />} />
+      <Route exact path="/deleteTours" element={<DeleteTours />} />
+      <Route exact path="/updateTour/:id" element={<EditTour />} />
+      <Route path='*' element={<h2><b>404 NOT FOUND</b></h2>}/>
     </Routes>
   );
 };

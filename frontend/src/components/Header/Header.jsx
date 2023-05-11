@@ -13,11 +13,6 @@ const nav__links = [
     for: "user"
   },
   {
-    path: "/about",
-    display: "About",
-    for: "user"
-  },
-  {
     path: "/tours",
     display: 'Tours',
     for: "user"

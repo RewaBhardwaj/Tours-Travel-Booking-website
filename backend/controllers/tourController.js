@@ -2,6 +2,8 @@ const Tour = require('./../models/Tour');
 
 // create new tour
 const createTour = async (req, res) => {
+    const featured = req.body.featured;
+    req.body.featured = (featured === 'Yes') ? true : false;
     const newTour = new Tour(req.body);
     try {
         const savedTour = await newTour.save();
@@ -14,6 +16,8 @@ const createTour = async (req, res) => {
 // update tour function
 const updateTour = async (req, res) => {
     const _id = req.params.id;
+    const featured = req.body.featured;
+    req.body.featured = (featured === 'Yes') ? true : false;
     try {
         const updatedTour = await Tour.findByIdAndUpdate(_id, {
             $set: req.body
@@ -52,7 +56,6 @@ const getAllTours = async (req, res) => {
 
     // for pagination
     const page = parseInt(req.query.page);
-    console.log(req.cookies);
 
     try {
         const tours = await Tour.find({}).populate('reviews').skip((page) * 8).limit(8);
