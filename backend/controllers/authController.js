@@ -8,7 +8,9 @@ const registerUser = async (req, res) => {
         // hashing password
         const salt = bcrypt.genSaltSync(10);
         const hashPassword = bcrypt.hashSync(req.body.password, salt);
-
+        if (await User.findOne({ email: req.body.email }) || await User.findOne({ username: req.body.username })) {
+            return res.status(403).send({ success: false, message: 'User Already Exists' });
+        }
 
         const newUser = new User({
             username: req.body.username,
@@ -50,7 +52,7 @@ const loginUser = async (req, res) => {
                 // set token in browser cookies & send response to client
                 res.cookie('accessToken', jwtToken, { httpOnly: true, expires: jwtToken.expiresIn })
                     .status(200)
-                    .send({ success: true, jwtToken, data: { ...rest }});
+                    .send({ success: true, jwtToken, data: { ...rest } });
             }
         }
 
