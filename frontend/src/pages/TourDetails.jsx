@@ -18,7 +18,7 @@ const TourDetails = () => {
   const { id } = useParams();
   const reviewMsgRef = useRef('');
   const [tourRating, setTourRating] = useState(5);
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   // fetching data from database
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
@@ -81,8 +81,8 @@ const TourDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [tour]);
-
+  }, [tour])
+  
 
   const imgs=[
     {id:0,value:"https://wallpaperaccess.com/full/2637581.jpg"},
@@ -109,17 +109,7 @@ const TourDetails = () => {
             <Row>
               <Col lg="8">
                 <div className="tour__content">
-                <img src={wordData.value} height="300" width="500" /> 
-
-               <div className='flex_row'>
-                {imgs.map((data,i)=>
-                 <div className="thumbnail" key={i} >
-                 <img className={wordData.id==i?"clicked":""} 
-                  src={data.value} onClick={()=>handleClick(i)} height="70" width="100" />
-                   </div>
-                    )}
-                    </div>
-
+                  <img src={photo} alt="" />
                   <div className="tour__info">
                     <h2>{title}</h2>
                     <div className="d-flex align-items-center gap-5">
@@ -166,8 +156,8 @@ const TourDetails = () => {
                     rating__group">
                         {
                           [...Array(5)].map((item, idx) =>
-                            <span key={idx} onClick={() => setTourRating(idx+1)}>
-                              {idx+1} <i className="ri-star-s-fill"></i>
+                            <span key={idx} onClick={() => setTourRating(idx + 1)}>
+                              {idx + 1} <i className="ri-star-s-fill"></i>
                             </span>
                           )
                         }
