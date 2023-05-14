@@ -54,6 +54,7 @@ const TourDetails = () => {
       }
 
       const reviewObj = {
+        userId: user && user._id,
         username: user?.username,
         reviewText,
         rating: tourRating
@@ -82,7 +83,7 @@ const TourDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [tour])
-  
+
 
   const imgs=[
     {id:0,value:"https://wallpaperaccess.com/full/2637581.jpg"},
