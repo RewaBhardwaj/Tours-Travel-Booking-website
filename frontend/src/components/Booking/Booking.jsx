@@ -48,7 +48,6 @@ const Booking = ({ tour, avgRating }) => {
             if(!user || user === undefined || user === null) {
                 return alert('Please Sign in');
             }
-            console.log(booking)
             const res = await fetch(`${BASE_URL}/booking`, {
                 method: 'POST',
                 headers: {
