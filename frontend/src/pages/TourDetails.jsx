@@ -19,7 +19,7 @@ const TourDetails = () => {
 
   // fetching data from database
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
-
+                                                     
   // destructure properties from tour object
   const {
     photo,
@@ -261,3 +261,4 @@ const TourDetails = () => {
 };
 
 export default TourDetails;
+
