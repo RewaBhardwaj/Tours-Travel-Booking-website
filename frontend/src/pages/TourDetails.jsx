@@ -9,6 +9,7 @@ import Newsletter from "../shared/Newsletter";
 import useFetch from "../hooks/useFetch";
 import { BASE_URL } from "../utils/config";
 import { AuthContext } from "../Context/AuthContext";
+import axios from "axios";
 
 const TourDetails = () => {
   const { id } = useParams();
@@ -18,7 +19,7 @@ const TourDetails = () => {
 
   // fetching data from database
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
-
+                                                     
   // destructure properties from tour object
   const {
     photo,
@@ -30,7 +31,7 @@ const TourDetails = () => {
     city,
     distance,
     maxGroupSize,
-  } = tour;
+  } =tour;
 
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
@@ -50,7 +51,6 @@ const TourDetails = () => {
       }
 
       const reviewObj = {
-        userId: user && user._id,
         username: user?.username,
         reviewText,
         rating: tourRating
@@ -78,6 +78,24 @@ const TourDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [tour])
+
+  const apiKey = "e6855941110397355e743933c00e18d6"
+  const [data,setData] = useState({})
+
+  const getWetherDetails = (cityName)=>{
+    if(!cityName) return
+    const apiURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + apiKey
+    axios.get(apiURL).then((res)=>{
+      console.log("response",res.data)
+      setData(res.data)
+    }).catch((err)=>{
+      console.log("err",err)
+    })
+  }
+
+  useEffect(()=>{
+    getWetherDetails(tour.city)
+  },[tour])
 
 
   return (
@@ -192,10 +210,38 @@ const TourDetails = () => {
                               </div>
                               <h6>{review.reviewText}</h6>
                             </div>
-                          </div>
+                          </div>    
                         ))}
                     </ListGroup>
                   </div>
+                  <div className="weather__updates mt-4">
+                  <h4>Weather Updates</h4> <br></br>
+
+                  <h5>
+                    Name: {data?.name}
+                  </h5>
+                  <h5>
+                    Temperature: {((data?.main?.temp)-273.15).toFixed(2)}°C
+                  </h5>
+                  {/* <h5>
+                    Weather: {data?.weather[0]?.main}
+                  </h5> */}
+                  <h5>
+                    Weather : {data.weather && data.weather[0].main}
+                  </h5>
+                  <h5>
+                    Humidity: {data?.main?.humidity}
+                  </h5>
+                  <h5>
+                    Pressure: {data?.main?.pressure}
+                  </h5>
+                  <h5>
+                    Wind Speed: {data?.wind?.speed}
+                  </h5>
+                  <h5>
+                    Wind Angle: {data?.wind?.deg}
+                  </h5>
+                </div>
                   {/*-------tour reviews section end------- */}
                 </div>
               </Col>
@@ -215,3 +261,4 @@ const TourDetails = () => {
 };
 
 export default TourDetails;
+
