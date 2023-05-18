@@ -54,7 +54,7 @@ const createBooking = async (req, res) => {
     doc
       .font("Helvetica-Bold")
       .fontSize(20)
-      .text(`Dear ${req.body.fullName}, your tour is booked.`, {
+      .text(`Dear ${req.body.fullName}, your Tour is booked.`, {
         align: "center",
       });
 
@@ -111,11 +111,15 @@ const createBooking = async (req, res) => {
     doc.moveDown();
     doc.moveDown();
     doc.moveDown();
+    doc.moveDown();
+    doc.moveDown();
+    doc.moveDown();
+   
 
     doc
       .fontSize(12)
       .text(
-        `Email : team@gmail.com                                      Phone No : 9914146239`
+        `Email : advenista@gmail.com                                           Phone No : 9914146239`
       );
 
     const writeStream = fs.createWriteStream(filePath);

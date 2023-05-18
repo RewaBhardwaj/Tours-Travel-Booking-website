@@ -18,10 +18,11 @@ const TourDetails = () => {
   const [tourRating, setTourRating] = useState(5);
   const { user } = useContext(AuthContext);
   const [carouselImages, setCarouselImages] = useState(null);
+  const [weatherData, setWeatherData] = useState(null);
 
   // fetching data from database
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
-
+                                                     
   // destructure properties from tour object
   const {
     title,
@@ -133,8 +134,19 @@ const TourDetails = () => {
       }
     };
 
+    const getWetherDetails = (cityName) => {
+      if (!cityName) return
+      const apiURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + 'e6855941110397355e743933c00e18d6'
+      fetch(apiURL).then((res) => {
+        setWeatherData(res.data);
+      }).catch((err) => {
+        setWeatherData('Error Fetching Weather Data');
+      })
+    }
+
     fetchCarouselImages();
-  }, [tour, title]);
+    getWetherDetails(city);
+  }, [tour, title, city]);
 
 
   return (
@@ -249,10 +261,35 @@ const TourDetails = () => {
                               </div>
                               <h6>{review.reviewText}</h6>
                             </div>
-                          </div>
+                          </div>    
                         ))}
                     </ListGroup>
                   </div>
+                  <div className="weather__updates mt-4">
+                  <h4>Weather Updates</h4> <br></br>
+
+                  <h5>
+                    Name: {weatherData?.name}
+                  </h5>
+                  <h5>
+                    Temperature: {((weatherData?.main?.temp)-273.15).toFixed(2)}°C
+                  </h5>
+                  <h5>
+                    Weather : {weatherData.weather && weatherData.weather[0].main}
+                  </h5>
+                  <h5>
+                    Humidity: {weatherData?.main?.humidity}
+                  </h5>
+                  <h5>
+                    Pressure: {weatherData?.main?.pressure}
+                  </h5>
+                  <h5>
+                    Wind Speed: {weatherData?.wind?.speed}
+                  </h5>
+                  <h5>
+                    Wind Angle: {weatherData?.wind?.deg}
+                  </h5>
+                </div>
                   {/*-------tour reviews section end------- */}
                 </div>
               </Col>
@@ -272,3 +309,4 @@ const TourDetails = () => {
 };
 
 export default TourDetails;
+
