@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "../styles/tour-details.css";
 import {
-  Container, Row, Col, Form, ListGroup, Carousel, CarouselItem, CarouselControl, CarouselIndicators } from "reactstrap";
+  Container, Row, Col, Form, ListGroup, Carousel, CarouselItem, CarouselControl, CarouselIndicators
+} from "reactstrap";
 import { useParams } from "react-router-dom";
 import calculateAvgRating from "./../utils/avgRating";
 import avatar from "../assets/images/avatar.jpg";
@@ -22,7 +23,7 @@ const TourDetails = () => {
 
   // fetching data from database
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
-                                                     
+
   // destructure properties from tour object
   const {
     title,
@@ -33,7 +34,7 @@ const TourDetails = () => {
     city,
     distance,
     maxGroupSize,
-  } =tour;
+  } = tour;
 
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
@@ -119,32 +120,31 @@ const TourDetails = () => {
   });
 
   useEffect(() => {
-    window.scrollTo(0,0);
-    const fetchCarouselImages = async () => {
+    window.scrollTo(0, 0);
+    const fetchCarouselImages = async (cityname) => {
       try {
-        const response = await fetch(`https://api.pexels.com/v1/search?query=${title}&per_page=10`, {
+        if(!cityname) return;
+        const response = await fetch(`https://api.pexels.com/v1/search?query=${cityname}&per_page=5`, {
           headers: {
             Authorization: 'J2TavNRWEEjrovorwPL5oDSD05vMERqjCpyyMCRo1ZlZdN6HuJPthbQy',
           }
         })
         const data = await response.json();
-        setCarouselImages(data.photos.slice(2));
+        setCarouselImages(data.photos);
       } catch (error) {
         console.error("Error fetching carousel images:", error);
       }
     };
 
-    const getWetherDetails = (cityName) => {
-      if (!cityName) return
-      const apiURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + 'e6855941110397355e743933c00e18d6'
-      fetch(apiURL).then((res) => {
-        setWeatherData(res.data);
-      }).catch((err) => {
-        setWeatherData('Error Fetching Weather Data');
-      })
+    const getWetherDetails = async (cityname) => {
+      if (!cityname) return;
+      const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=e6855941110397355e743933c00e18d6`
+      const response = await fetch(apiURL);
+      const result = await response.json();
+      setWeatherData(result);
     }
 
-    fetchCarouselImages();
+    fetchCarouselImages(city);
     getWetherDetails(city);
   }, [tour, title, city]);
 
@@ -180,7 +180,7 @@ const TourDetails = () => {
                     <h2>{title}</h2>
                     <div className="d-flex align-items-center gap-5">
                       <span className="tour__rating d-flex align-items-center gap-1">
-                        <i className="ri-star-fill" style= {{ color: "var(--secondary-color)"}}
+                        <i className="ri-star-fill" style={{ color: "var(--secondary-color)" }}
                         ></i>
                         {avgRating === 0 ? null : avgRating}
                         {totalRating === 0 ? (
@@ -197,20 +197,82 @@ const TourDetails = () => {
 
                     <div className="tour__extra-details">
                       <span>
-                        <i className="ri-map-pin-2-line"></i>{city}</span>
+                        <i className="ri-map-pin-2-fill"></i>{city}</span>
                       <span>
-                        <i className="ri-money-dollar-circle-line"></i>${price} /
+                        <i className="ri-money-dollar-circle-fill"></i>${price} /
                         per person </span>
                       <span>
-                        <i className="ri-map-pin-time-line"></i> {distance} k/m
+                        <i className="ri-map-pin-time-fill"></i> {distance} k/m
                       </span>
                       <span>
-                        <i className="ri-group-line"></i>
+                        <i className="ri-group-fill"></i>
                         {maxGroupSize} people
                       </span>
                     </div>
                     <h5>Description</h5>
                     <p>{desc}</p>
+                  </div>
+
+                  <div className="weather__updates mt-4">
+                    <h4>Weather Updates</h4> <br></br>
+                    <div className="weather">
+                      <div className="weather-info">
+                        <div className="weather-key">
+                          Place
+                        </div>
+                        <div className="weather-value">
+                          {weatherData?.name}
+                        </div>
+                      </div>
+                      <div className="weather-info">
+                        <div className="weather-key">
+                          Temperature
+                        </div>
+                        <div className="weather-value">
+                          {((weatherData?.main?.temp) - 273.15).toFixed(2)} °C
+                        </div>
+                      </div>
+                      <div className="weather-info">
+                        <div className="weather-key">
+                          Weather
+                        </div>
+                        <div className="weather-value">
+                          {weatherData?.weather[0]?.main}
+                        </div>
+                      </div>
+                      <div className="weather-info">
+                        <div className="weather-key">
+                          Humidity
+                        </div>
+                        <div className="weather-value">
+                          {weatherData?.main?.humidity} %
+                        </div>
+                      </div>
+                      <div className="weather-info">
+                        <div className="weather-key">
+                          Pressure
+                        </div>
+                        <div className="weather-value">
+                          {weatherData?.main?.pressure} Hg
+                        </div>
+                      </div>
+                      <div className="weather-info">
+                        <div className="weather-key">
+                          Wind Speed
+                        </div>
+                        <div className="weather-value">
+                          {weatherData?.wind?.speed} km/h
+                        </div>
+                      </div>
+                      <div className="weather-info">
+                        <div className="weather-key">
+                          Wind Angle
+                        </div>
+                        <div className="weather-value">
+                          {weatherData?.wind?.deg} °
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   {/*-------tour reviews section------- */}
@@ -261,35 +323,10 @@ const TourDetails = () => {
                               </div>
                               <h6>{review.reviewText}</h6>
                             </div>
-                          </div>    
+                          </div>
                         ))}
                     </ListGroup>
                   </div>
-                  <div className="weather__updates mt-4">
-                  <h4>Weather Updates</h4> <br></br>
-
-                  <h5>
-                    Name: {weatherData?.name}
-                  </h5>
-                  <h5>
-                    Temperature: {((weatherData?.main?.temp)-273.15).toFixed(2)}°C
-                  </h5>
-                  <h5>
-                    Weather : {weatherData.weather && weatherData.weather[0].main}
-                  </h5>
-                  <h5>
-                    Humidity: {weatherData?.main?.humidity}
-                  </h5>
-                  <h5>
-                    Pressure: {weatherData?.main?.pressure}
-                  </h5>
-                  <h5>
-                    Wind Speed: {weatherData?.wind?.speed}
-                  </h5>
-                  <h5>
-                    Wind Angle: {weatherData?.wind?.deg}
-                  </h5>
-                </div>
                   {/*-------tour reviews section end------- */}
                 </div>
               </Col>
@@ -300,7 +337,7 @@ const TourDetails = () => {
               </Col>
               {/* Booking Section start here */}
             </Row>
-         ) }
+          )}
         </Container>
       </section>
       <Newsletter />
