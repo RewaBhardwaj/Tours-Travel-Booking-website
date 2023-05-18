@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useRef, useState, Component } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "../styles/tour-details.css";
-import { Container, Row, Col, Form, ListGroup } from "reactstrap";
+import {
+  Container, Row, Col, Form, ListGroup, Carousel, CarouselItem, CarouselControl, CarouselIndicators } from "reactstrap";
 import { useParams } from "react-router-dom";
 import calculateAvgRating from "./../utils/avgRating";
 import avatar from "../assets/images/avatar.jpg";
@@ -10,27 +11,19 @@ import useFetch from "../hooks/useFetch";
 import { BASE_URL } from "../utils/config";
 import { AuthContext } from "../Context/AuthContext";
 import "../styles/ImageSlider.css";
-import {
-  Carousel,
-  CarouselItem,
-  CarouselControl,
-  CarouselIndicators,
-  CarouselCaption
-} from 'reactstrap';
 
 const TourDetails = () => {
   const { id } = useParams();
   const reviewMsgRef = useRef('');
   const [tourRating, setTourRating] = useState(5);
   const { user } = useContext(AuthContext);
-  const [carouselImages, setCarouselImages] = useState([]);
+  const [carouselImages, setCarouselImages] = useState(null);
 
   // fetching data from database
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
 
   // destructure properties from tour object
   const {
-   photo,
     title,
     desc,
     price,
@@ -112,14 +105,14 @@ const TourDetails = () => {
     setActiveIndex(newIndex);
   }
 
-  const slides = carouselImages.map((item) => {
+  const slides = carouselImages?.map((item) => {
     return (
       <CarouselItem
         onExiting={onExiting}
         onExited={onExited}
         key={item.id}
       >
-        <img src={item.urls.regular} alt={item.altText} />
+        <img src={item.src.portrait} alt={item.altText} />
       </CarouselItem>
     );
   });
@@ -128,24 +121,20 @@ const TourDetails = () => {
     window.scrollTo(0,0);
     const fetchCarouselImages = async () => {
       try {
-        const response = await fetch(
-          `https://api.unsplash.com/photos/random?client_id=QrNLh2od9Y42JNGHqlxkUr2bH867eep7u59jKjDvls0&count=5&query=${title}`,
-          {
-            headers: {
-              Authorization: "Your-Unsplash-API-Key",
-            },
+        const response = await fetch(`https://api.pexels.com/v1/search?query=${title}&per_page=10`, {
+          headers: {
+            Authorization: 'J2TavNRWEEjrovorwPL5oDSD05vMERqjCpyyMCRo1ZlZdN6HuJPthbQy',
           }
-        );
+        })
         const data = await response.json();
-        console.log(data);
-        setCarouselImages(data);
+        setCarouselImages(data.photos.slice(2));
       } catch (error) {
         console.error("Error fetching carousel images:", error);
       }
     };
 
     fetchCarouselImages();
-  }, [tour]);
+  }, [tour, title]);
 
 
   return (
@@ -156,21 +145,25 @@ const TourDetails = () => {
 
           {error && <h4 className="text-center pt-5">{error}</h4>}
 
+          {!carouselImages && <h4>Error Loading Images...</h4>}
+
           {!loading && !error && (
             <Row>
               <Col lg="8">
                 <div className="tour__content">
-                  {/* <img src={`${BASE_URL}/image/${photo}`} alt="" /> */}
-                  <Carousel
-                    activeIndex={activeIndex}
-                    next={next}
-                    previous={previous}
-                  >
-                    <CarouselIndicators items={carouselImages} activeIndex={activeIndex} onClickHandler={goToIndex} />
-                    {slides}
-                    <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
-                    <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
-                  </Carousel>
+                  {
+                    carouselImages &&
+                    <Carousel
+                      activeIndex={activeIndex}
+                      next={next}
+                      previous={previous}
+                    >
+                      <CarouselIndicators items={carouselImages} activeIndex={activeIndex} onClickHandler={goToIndex} />
+                      {slides}
+                      <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
+                      <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+                    </Carousel>
+                  }
                   <div className="tour__info">
                     <h2>{title}</h2>
                     <div className="d-flex align-items-center gap-5">
