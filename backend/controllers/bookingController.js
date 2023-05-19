@@ -3,6 +3,7 @@ const Booking = require("../models/Booking");
 const PDFDocument = require("pdfkit");
 const fs = require("fs");
 const path = require("path");
+const os = require('os');
 
 // create booking
 const createBooking = async (req, res) => {
@@ -17,7 +18,7 @@ const createBooking = async (req, res) => {
     const dateOfBooking = new Date().toLocaleDateString();
 
     const filename = `booking-receipt-${savedBooking._id}.pdf`;
-    const file = path.join(__dirname, "..", "public", "receipts", filename);
+    const filePath = path.join(os.homedir(), "Downloads", filename);
 
 
     const logoPath = path.join(
@@ -121,8 +122,15 @@ const createBooking = async (req, res) => {
         `Email : advenista@gmail.com                                           Phone No : 9914146239`
       );
 
-    doc.pipe(fs.createWriteStream(file));
+    const writeStream = fs.createWriteStream(filePath);
+    doc.pipe(writeStream);
     doc.end();
+
+    // Handle the 'finish' event to know when the PDF is saved
+    writeStream.on('finish', () => {
+      // Inform the user that the PDF is saved and provide the download link
+      const downloadLink = `/downloads/${filename}`;
+    });
 
     // send response
     res.status(200).send({
@@ -130,7 +138,6 @@ const createBooking = async (req, res) => {
       message: "Your tour is booked",
       data: savedBooking,
     });
-    console.log("pdf is downloaded");
   } catch (err) {
     res
       .status(500)
@@ -143,7 +150,7 @@ const getBooking = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const booking = await Booking.findById(id);
+    const booking = await Booking.find({userId: id});
 
     res
       .status(200)

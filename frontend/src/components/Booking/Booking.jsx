@@ -11,11 +11,12 @@ const Booking = ({ tour, avgRating }) => {
 
     const {user} = useContext(AuthContext);
 
+    console.log(user);
     const [booking, setBooking] = useState({
-        userId: user && user._id,
-        userEmail: user && user.email,
+        userId: user?._id,
+        userEmail: user?.email,
         tourName: title,
-        fullName: '',
+        fullName: user?.username,
         phone: 0,
         guestSize: 0,
         price: 0,
@@ -44,11 +45,14 @@ const Booking = ({ tour, avgRating }) => {
             return alert(`Guests are more than the required capacity\nMax Group Size is: ${maxGroupSize}`);
         }
 
+        if(booking.phone < 1000000000 || booking.phone > 9999999999) {
+            return alert('Invalid Phone Number!');
+        }
+
         try {
             if(!user || user === undefined || user === null) {
                 return alert('Please Sign in');
             }
-            console.log(booking)
             const res = await fetch(`${BASE_URL}/booking`, {
                 method: 'POST',
                 headers: {
@@ -90,7 +94,7 @@ const Booking = ({ tour, avgRating }) => {
                 <h5>Your Details</h5>
                 <Form className="booking__info-form" onSubmit={handleClick}>
                     <FormGroup>
-                        <input type="text" placeholder="Full Name" id="fullName" onChange={handleChange} />
+                        <input type="text" placeholder="Full Name" id="fullName" value={booking.fullName} onChange={handleChange} />
                     </FormGroup>
                     <FormGroup>
                         <input type="number" min={1111111111} max={9999999999} placeholder="Phone" id="phone" onChange={handleChange} />
