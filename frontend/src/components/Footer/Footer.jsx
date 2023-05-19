@@ -128,7 +128,7 @@ const Footer = () => {
           </Col>
           <Col lg='12' className="text-center pt-5">
             <p className="copyright">
-              Copyright {year}.All rights reserved. No part of this site may be reproduced without our written permission.
+              Copyright {year}. All rights reserved. No part of this site may be reproduced without our written permission.
             </p>
           </Col>
         </Row>
