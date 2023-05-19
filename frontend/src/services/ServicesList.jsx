@@ -6,7 +6,7 @@ const serviceData = [
   {
     icon: "ri-sun-foggy-fill",
     title: "Check Weather",
-    desc: "Before travelling , know the weather of your desitnation."
+    desc: "Before travelling , know the current weather of your destination."
   },
 
   {
@@ -17,7 +17,7 @@ const serviceData = [
   {
     icon: "ri-newspaper-fill",
     title: "Personalized Newsletter",
-    desc: "We server personalized newsletter to get featured tours direclty in your mail"
+    desc: "We serve Personalized Newsletter for our featured tours directly in your mail"
   }
 ];
 

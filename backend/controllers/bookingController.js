@@ -150,7 +150,7 @@ const getBooking = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const booking = await Booking.findById(id);
+    const booking = await Booking.find({userId: id});
 
     res
       .status(200)

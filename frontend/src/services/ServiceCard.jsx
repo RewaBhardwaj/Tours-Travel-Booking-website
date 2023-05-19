@@ -1,8 +1,6 @@
 import React from "react";
 import "./service-card.css";
 
-
-
 const ServiceCard = ({ item }) => {
   const { icon, title, desc } = item;
   return (
