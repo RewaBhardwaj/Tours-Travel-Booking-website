@@ -41,7 +41,7 @@ const SearchBar = () => {
 
             <div>
               <h6>Location</h6>
-              <input type="text" placeholder="Where are you going?"
+              <input type="text" placeholder="location"
                 ref={locationRef}
               />
             </div>
@@ -53,7 +53,7 @@ const SearchBar = () => {
 
             <div>
               <h6>Distance</h6>
-              <input type="number" placeholder="Distance km/h" ref={distanceRef} />
+              <input type="number" placeholder="in km" ref={distanceRef} />
             </div>
           </div>
           <div className="d-flex gap-3 form__group form__group-last m-1">
@@ -62,7 +62,7 @@ const SearchBar = () => {
             </span>
 
             <div>
-              <h6>Max People</h6>
+              <h6>People</h6>
               <input type="number" placeholder="0" ref={maxGroupSizeRef} />
             </div>
           </div>

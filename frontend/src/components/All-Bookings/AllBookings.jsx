@@ -32,35 +32,38 @@ const AllBookings = () => {
                 <Row>
                   <Col lg="10" className="offset-sm-1">
                     <div className="brief-info">
-                      <div className="nums users">
-                        <div className="number">
-                          {usersCount}
-                          <br />
+                      <div className="brief-info-box">
+                        <div className="nums users">
+                          <div className="number">
+                            {usersCount}
+                          </div>
                           <div className="name">
                             Customers
                           </div>
                         </div>
-                        <i class="icon ri-group-2-fill"></i>
+                        <i className="icon ri-group-2-fill"></i>
                       </div>
-                      <div className="nums bookings">
-                        <div className="number">
-                          {totalBookings}
-                          <br />
+                      <div className="brief-info-box">
+                        <div className="nums bookings">
+                          <div className="number">
+                            {totalBookings}
+                          </div>
                           <div className="name">
                             Bookings
                           </div>
                         </div>
-                        <i class="icon ri-calendar-check-fill"></i>
+                        <i className="icon ri-calendar-check-fill"></i>
                       </div>
-                      <div className="nums revenue">
-                        <div className="number">
-                          &#x24; {totalRevenue}
-                          <br />
+                      <div className="brief-info-box">
+                        <div className="nums revenue">
+                          <div className="number">
+                            &#x24; {totalRevenue}
+                          </div>
                           <div className="name">
                             Revenue
                           </div>
                         </div>
-                        <i class="icon ri-money-dollar-circle-fill"></i>
+                        <i className="icon ri-money-dollar-circle-fill"></i>
                       </div>
                     </div>
                   </Col>
