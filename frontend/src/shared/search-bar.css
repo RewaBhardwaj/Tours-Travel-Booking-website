@@ -1,5 +1,3 @@
-
-
 .search__bar{
     padding: 0.5rem 1rem;
     border-radius: 50px;
@@ -51,14 +49,10 @@
         width: 100%;
         border-radius: 2rem;
     }
-    .search__bar form {
-        flex-wrap: wrap;
-    }
-    .search__bar form .form__group {
-        width: 48%;
-    }
 
-    
+    .search__bar .form__group input {
+        width: 65%;
+    }
 }
 @media only screen and (max-width : 576px) {
     .search__bar form .form__group {

@@ -126,7 +126,7 @@ const TourDetails = () => {
         if(!cityname) return;
         const response = await fetch(`https://api.pexels.com/v1/search?query=${cityname}&per_page=5`, {
           headers: {
-            Authorization: 'J2TavNRWEEjrovorwPL5oDSD05vMERqjCpyyMCRo1ZlZdN6HuJPthbQy',
+            Authorization: process.env.REACT_APP_CAROUSEL_PHOTOS_API_KEY,
           }
         })
         const data = await response.json();
@@ -138,7 +138,7 @@ const TourDetails = () => {
 
     const getWetherDetails = async (cityname) => {
       if (!cityname) return;
-      const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=e6855941110397355e743933c00e18d6`
+      const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
       const response = await fetch(apiURL);
       const result = await response.json();
       setWeatherData(result);
