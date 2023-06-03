@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-dotenv.config({path: `${__dirname}/../../.env`});
+dotenv.config();
 const multer = require("multer");
 const { GridFsStorage } = require("multer-gridfs-storage");
 

@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const cors = require('cors')
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-dotenv.config({path: `${__dirname}/../../.env`});
+dotenv.config();
 
 // fetching routes
 const authRoute = require('./routes/auth');
